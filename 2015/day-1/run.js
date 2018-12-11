@@ -1,9 +1,7 @@
-const data = require('./data.js')
-
 let floor = 0
 let basementPosition = 0
 
-module.exports = () => {
+module.exports = data => {
     const arr = data.split('')
 
     arr.forEach((element, key) => {

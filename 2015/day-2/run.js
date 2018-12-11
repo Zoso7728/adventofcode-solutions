@@ -1,6 +1,3 @@
-const data = require('./data.js')
-const regex = /^([0-9]*)+x([0-9]*)+x([0-9]*)/
-
 let squareFeetWrappingPaper = 0
 let feetRibbon = 0
 
@@ -24,7 +21,8 @@ const calcRibbon = (l, w, h) => {
     feetRibbon += smallestPerimeter + cubicVolume
 }
 
-module.exports = () => {
+module.exports = data => {
+    const regex = /^([0-9]*)+x([0-9]*)+x([0-9]*)/
     const arr = data.split('\n')
 
     arr.forEach(element => {
