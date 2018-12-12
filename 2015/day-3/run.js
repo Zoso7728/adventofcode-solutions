@@ -1,3 +1,7 @@
 module.exports = data => {
-    console.log(data)
+    const arr = data.split('')
+
+    arr.forEach(element => {
+
+    })
 }

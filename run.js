@@ -5,7 +5,7 @@
     const BASE_PATH = `./${year}/day-${day}`
 
     const data = require(`${BASE_PATH}/data.js`)
-    const puzzle = require(`${BASE_PATH}/run.js`)
+    const run = require(`${BASE_PATH}/run.js`)
 
-    puzzle(data)
+    run(data)
 })()
