@@ -1,3 +1,12 @@
+const distinct = (val, idx, self) => self.indexOf(val) === idx
+
+const setCoordinates = (element, coordinate)  => {
+    if (element === '^') ++coordinate.y
+    if (element === 'v') --coordinate.y
+    if (element === '>') ++coordinate.x
+    if (element === '<') --coordinate.x
+}
+
 const firstCalc = arr => {
     let coordinate = { x: 0, y: 0 }
     const totalLocationsVisited = []
@@ -5,10 +14,7 @@ const firstCalc = arr => {
     totalLocationsVisited.push(`${coordinate.x}${coordinate.y}`) // track initial house
 
     arr.forEach(element => {
-        if (element === '^') ++coordinate.y
-        if (element === 'v') --coordinate.y
-        if (element === '>') ++coordinate.x
-        if (element === '<') --coordinate.x
+        setCoordinates(element, coordinate)
 
         const str = `${coordinate.x}${coordinate.y}`
 
@@ -16,10 +22,8 @@ const firstCalc = arr => {
         if (!exists) totalLocationsVisited.push(str)
     })
 
-    console.log('Total locations visited the first year:', totalLocationsVisited.length)
+    return totalLocationsVisited.length
 }
-
-const distinct = (val, idx, self) => self.indexOf(val) === idx
 
 const secondCalc = arr => {
     let santaCoordinate = { x: 0, y: 0 }
@@ -34,10 +38,7 @@ const secondCalc = arr => {
         const santaTurn = key % 2 === 0
 
         if (santaTurn) {
-            if (element === '^') ++santaCoordinate.y
-            if (element === 'v') --santaCoordinate.y
-            if (element === '>') ++santaCoordinate.x
-            if (element === '<') --santaCoordinate.x
+            setCoordinates(element, santaCoordinate)
 
             const str = `${santaCoordinate.x}${santaCoordinate.y}`
             const exists = santaLocationsVisited.concat(roboSantaLocaltionsVisited).find(i => i === str)
@@ -45,10 +46,7 @@ const secondCalc = arr => {
         }
 
         if (!santaTurn) {
-            if (element === '^') ++roboSantaCoordinate.y
-            if (element === 'v') --roboSantaCoordinate.y
-            if (element === '>') ++roboSantaCoordinate.x
-            if (element === '<') --roboSantaCoordinate.x
+            setCoordinates(element, roboSantaCoordinate)
 
             const str = `${roboSantaCoordinate.x}${roboSantaCoordinate.y}`
             const exists = roboSantaLocaltionsVisited.concat(santaLocationsVisited).find(i => i === str)
@@ -56,12 +54,21 @@ const secondCalc = arr => {
         }
     })
 
-    console.log('Total locations visisted the second year:', santaLocationsVisited.concat(roboSantaLocaltionsVisited).filter(distinct).length)
+    const distinct = (val, idx, self) => self.indexOf(val) === idx
+
+    return santaLocationsVisited
+        .concat(roboSantaLocaltionsVisited)
+        .filter((val, idx, self) => {
+            return self.indexOf(val) === idx
+        }).length
 }
 
 module.exports = data => {
     const arr = data.split('')
 
-    firstCalc(arr)
-    secondCalc(arr)
+    const firstYearLocations = firstCalc(arr)
+    const secondYearLocations = secondCalc(arr)
+
+    console.log('Number of houses visited on first year:', firstYearLocations)
+    console.log('Number of houses visited on second year:', secondYearLocations)
 }
